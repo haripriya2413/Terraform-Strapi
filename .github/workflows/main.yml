@@ -1,4 +1,4 @@
-name: Deploy Terraform
+name: Terraform CI/CD
 
 on:
   workflow_dispatch:
@@ -8,19 +8,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 1.0.0
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.1.0  # Adjust to the version you're using
+        aws_access_key_id: ${{ secrets.HARIPRIYA_AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.HARIPRIYA_AWS_SECRET_ACCESS_KEY }}
+        region: ${{ secrets.HARIPRIYA_AWS_REGION }}
 
-      - name: Initialize Terraform
-        run: terraform init
+    - name: Terraform Init
+      run: terraform init
 
-      - name: Apply Terraform
-        run: terraform apply -auto-approve
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: Terraform Validate
+      run: terraform validate
+
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -out=tfplan
+
+    - name: Terraform Apply
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'  # Adjust condition as needed
+      run: terraform apply -auto-approve tfplan
