@@ -2,7 +2,7 @@
 resource "aws_instance" "strapi" {
   ami           = var.ami  # Ubuntu 20.04 LTS AMI
   instance_type = var.instance_type
-  key_name      = aws_key_pair.strapi_keypair.key_name # Replace with your key pair name
+  key_name      = "id_rsa" # Replace with your key pair name
     tags = {
         Name = "Strapi-Instance"
      }
