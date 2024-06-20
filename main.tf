@@ -41,7 +41,7 @@ provisioner "remote-exec" {
    connection {
     type        = "ssh"
     user        = "ubuntu"  # Replace with the appropriate username for your EC2 instance
-    private_key = tls_private_key.strapi_key.private_key_pem  # Replace with the path to your private key
+    private_key = file("~/.ssh/id_rsa")   # Replace with the path to your private key
     host        = self.public_ip
   }
  
@@ -56,5 +56,6 @@ resource "tls_private_key" "strapi_key" {
 
 resource "aws_key_pair" "strapi_keypair" {
   key_name   = "strapi-keypair2"
-  public_key = tls_private_key.strapi_key.public_key_openssh
+  public_key = file("~/.ssh/id_rsa.pub") 
 }
+
