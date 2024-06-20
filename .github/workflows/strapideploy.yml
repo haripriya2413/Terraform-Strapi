@@ -21,7 +21,7 @@ jobs:
     - name: SSH into EC2 instance and deploy Strapi
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HARIPRIYA_EC2_PUBLIC_IP }}
+        host: ${{ secrets.HARIPRIYA_EC2_HOST }}
         username: ubuntu
         key: ${{ secrets.HARIPRIYA_PRIVATE_SSH_KEY }}
         script: |
