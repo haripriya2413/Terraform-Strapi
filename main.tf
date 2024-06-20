@@ -2,7 +2,7 @@
 resource "aws_instance" "strapi" {
   ami           = var.ami  # Ubuntu 20.04 LTS AMI
   instance_type = var.instance_type
-  key_name      = var.key_name # Replace with your key pair name
+  key_name      = aws_key_pair.deployer # Replace with your key pair name
     tags = {
         Name = "Strapi-Instance"
      }
@@ -35,3 +35,4 @@ resource "aws_key_pair" "deployer" {
   key_name   = "deployer-key"
   public_key = file("~/.ssh/id_rsa.pub")
 }
+
