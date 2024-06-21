@@ -38,7 +38,7 @@ jobs:
 
           # Start the Strapi application using pm2
           #pm2 start npm --name 'strapi' -- run develop
-                    
+                   
            # Check if Strapi is already managed by pm2
           if ! sudo pm2 status | grep -q "strapi"; then
             echo "Strapi is not managed by pm2. Starting Strapi with pm2..."
