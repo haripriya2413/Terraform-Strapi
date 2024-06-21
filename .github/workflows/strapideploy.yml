@@ -26,7 +26,6 @@ jobs:
         script: |
           cd /srv/strapi
           sudo git pull origin main
-        
           sudo npm install  
            # Install Strapi globally
           #sudo npm install strapi@beta -g
